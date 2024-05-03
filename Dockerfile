@@ -1,14 +1,14 @@
-# Use a specific version of the base image with JRE pre-installed
-FROM openjdk:11
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
 
-# Set the working directory inside the container
-WORKDIR /app
+MAINTAINER Muhammad Edwin < edwin at redhat dot com >
 
-# Copy the packaged JAR file from the host to the container
-COPY target/your-application.jar /app/
+LABEL BASE_IMAGE="registry.access.redhat.com/ubi8/ubi-minimal:8.5"
+LABEL JAVA_VERSION="11"
 
-# Expose the port your application listens on
-EXPOSE 8081
+RUN microdnf install --nodocs java-11-openjdk-headless && microdnf clean all
 
-# Command to run your application when the container starts
-CMD ["java", "-jar", "your-application.jar"]
+WORKDIR /work/
+COPY target/*.jar /work/application.jar
+
+EXPOSE 8084
+CMD ["java", "-jar", "application.jar"]
