@@ -1,5 +1,5 @@
-# Use a base image with JRE (Java Runtime Environment) pre-installed
-FROM openjdk:latest
+# Use a specific version of the base image with JRE pre-installed
+FROM openjdk:11
 
 # Set the working directory inside the container
 WORKDIR /app
